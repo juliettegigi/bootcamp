@@ -1,0 +1,17 @@
+
+@if(iniciarSesion){
+    @if(alert){
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <div class="text-center">
+                <strong>  Ya estás registrado!</strong> ahora podés iniciar sesión.
+            </div>
+    
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+    
+    <app-form-iniciar-sesion (emitirRegistro)="iniciarSesion=false" ></app-form-iniciar-sesion>
+}
+@else {
+    <app-registro (emitirIniciarSesion)="iniciarSesion=true" (emitirAlert)="alert=true" ></app-registro>
+}

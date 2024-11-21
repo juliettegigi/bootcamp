@@ -1,0 +1,97 @@
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-5 card">
+            <div class="row my-5">   
+                <div class="row justify-content-md-center">
+                    <div class="col col-md-auto">
+                        <i class="bi bi-person"></i>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col col-5 text-center">
+                        <h5 class="card-title"> Registro</h5>
+                    </div>
+                </div>
+            </div>
+            <!-- formulario -->
+            <div class="row">
+                <div class="col">
+                    <form [formGroup]="form" (submit)="onSubmit()">
+                        <div class="row justify-content-md-center">
+                            <div class="col-auto mt-4">
+                                <label class="form-label" for="nombre">
+                                    
+                                </label>
+                            </div>
+                            <div class="col-auto mt-3" >
+                                <input class="form-control"type="text" id="nombre" formControlName="nombre" placeholder="mi nombre" >
+                                <span class="text-danger" [hidden]="nombre?.valid ">* Ingrese un nombre</span>
+                            </div>
+                        </div>
+                        <div class="row justify-content-md-center">
+                            <div class="col-auto mt-3">
+                                <label class="col-form-label" for="email">
+                                </label>
+                            </div>
+                            <div class="col-auto mt-3">
+                                <input class="form-control" type="email" id="email" formControlName="email" placeholder="user@email.com">
+                                <span [hidden]="email?.valid || !email?.touched" class="text-danger">*Ingrese un email válido</span>
+                            </div>
+                        </div>
+                        <div class="row justify-content-md-center">
+                            <div class="col-auto mt-4">
+                                <label class="form-label" for="password">
+                                    
+                                </label>
+                            </div>
+                            <div class="col-auto mt-3">
+                                <input class="form-control"type="text" id="password" formControlName="password" placeholder="Contraseña" >
+                                <!-- <span class="text-danger" [hidden]="errorMsg">Error: los datos ingresados son inválidos</span> -->
+                                <span class="text-danger" [hidden]="password?.valid || !password?.touched">*Contraseña inválida</span>
+                            </div>
+                            
+                        </div><div class="row justify-content-md-center">
+                            <div class="col-auto mt-4">
+                                <label class="form-label" for="passwor2">
+                                    
+                                </label>
+                            </div>
+                            <div class="col-auto mt-3" >
+                                <input class="form-control"type="text" id="password2" formControlName="password2" placeholder="Repetir contraseña" >
+                                <span class="text-danger" [hidden]="password2?.valid ">* pass2 Contraseñas no coinciden</span>
+                            </div>
+                        </div>
+                         <!-- botón registrarme -->
+                         <div class="row justify-content-md-center">
+                            <div class="col-auto mt-3">
+                             <span class="text-danger"  [hidden]="!errorMsg">{{errorMsg}}</span>
+                            </div>
+                         </div>
+                        <div class="row justify-content-md-center mt-5">
+                            <div class="col d-flex justify-content-center">
+                                <button [disabled]="!form.valid" 
+                                        class="btn btn-outline-secondary "
+                                        type="submit"
+                                        >
+                                Registrarme</button>
+                            </div>
+                        </div>
+                <!--                      botones para registrarse y forgot pass-->
+                        <div class="row my-3 my-5">
+                            <div class="col d-flex justify-content-start align-items-center">
+                                <a class="icon-link icon-link-hover" style="--bs-link-hover-color-rgb: 202, 2, 126;" href="/admin">Forgot pass
+                                    <i class="bi bi-arrow-bar-right"> </i>
+                                </a>
+                            </div>
+                            <div class="col d-flex justify-content-end align-items-center">
+                                <a class="icon-link icon-link-hover" style="--bs-link-hover-color-rgb: 202, 2, 126;" (click)="onIniciarSesion()">Iniciar sesión
+                                    <i class="bi bi-arrow-bar-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

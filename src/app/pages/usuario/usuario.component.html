@@ -1,0 +1,26 @@
+<!-- Barra de navegación superior fija en la parte superior de la pantalla -->
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
+    <div class="container-fluid">
+      <a class="navbar-brand ms-auto" (click)="logOut()">🚪</a>
+    </div>
+</nav>
+  
+ 
+<div class="d-flex" style="padding-top: 56px;">
+    <!-- Barra de navegación vertical fija a la izquierda -->
+    <app-usuario-nav-bar (emitirSeleccionado)="recibirSeleccionado($event)"/>
+  
+    <!-- Contenido principal  -->
+    <div class="content" style="margin-left: 200px; padding: 20px; overflow-y: auto; height: calc(100vh - 56px);">
+        @switch (seleccion) {
+            @case ("lista") {
+               <app-usuario-tabla></app-usuario-tabla>
+            }
+            @case("misEventos"){
+             <app-usuario-tabla-mis-eventos/>            
+            }
+        }
+        
+      
+    </div>
+  </div>

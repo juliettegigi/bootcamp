@@ -1,0 +1,14 @@
+
+<ul class="list-group list-group-flush">
+    @for(usuario of usuarios; track $index){
+          <li class="list-group-item">
+            <input type="checkbox" (change)="setPresente(usuario.id, $event)">
+                  {{usuario.nombre}}
+          </li>
+    }
+</ul>
+   
+     <app-pagination [PAGES_CANTIDADxGRUPO]="PAGES_CANTIDADxGRUPO" 
+     [funcionPagina]="funcionPagina"
+     [LIMIT]="LIMIT"/>
+   

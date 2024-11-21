@@ -1,0 +1,93 @@
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-5 card">
+           
+            <div class="row my-5">   
+                <div class="row justify-content-md-center">
+                    <div class="col col-md-auto">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
+                            <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/>
+                          </svg>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col col-5 text-center">
+                        <h5 class="card-title"> Iniciar sesión</h5>
+                    </div>
+                </div>
+            </div>
+            <!-- formulario -->
+            <div class="row">
+                <div class="col">
+                    <form [formGroup]="form" (submit)="onSubmit()">
+                        <div class="row justify-content-md-center">
+                            <div class="col-auto mt-3">
+                                <label class="col-form-label" for="email">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
+                                        <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/>
+                                      </svg>
+                                </label>
+                            </div>
+                            <div class="col-auto mt-3">
+                                <input class="form-control" type="email" id="email" formControlName="email" placeholder="user@email.com">
+                                <span [hidden]="email?.valid || !email?.touched" class="text-danger">*Ingrese un email válido</span>
+                            </div>
+                        </div>
+                        <div class="row justify-content-md-center">
+                            <div class="col-auto mt-4">
+                                <label class="form-label" for="password">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-key" viewBox="0 0 16 16">
+                                        <path d="M0 8a4 4 0 0 1 7.465-2H14a.5.5 0 0 1 .354.146l1.5 1.5a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0L13 9.207l-.646.647a.5.5 0 0 1-.708 0L11 9.207l-.646.647a.5.5 0 0 1-.708 0L9 9.207l-.646.647A.5.5 0 0 1 8 10h-.535A4 4 0 0 1 0 8m4-3a3 3 0 1 0 2.712 4.285A.5.5 0 0 1 7.163 9h.63l.853-.854a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .708 0l.646.647.793-.793-1-1h-6.63a.5.5 0 0 1-.451-.285A3 3 0 0 0 4 5"/>
+                                        <path d="M4 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0"/>
+                                      </svg>
+                                </label>
+                            </div>
+                            <div class="col-auto mt-3">
+                                <input class="form-control"type="text" id="password" formControlName="password" placeholder="Contraseña" >
+                                <!-- <span class="text-danger" [hidden]="errorMsg">Error: los datos ingresados son inválidos</span> -->
+                                <span class="text-danger" [hidden]="password?.valid || !password?.touched">*Contraseña inválida</span>
+                            </div>
+                            
+                        </div>
+                        
+                         <!-- botón login -->
+                         <div class="row justify-content-md-center">
+                            <div class="col-auto mt-3">
+                             <span class="text-danger"  [hidden]="!errorMsg">Error: los datos ingresados son inválidos</span>
+                            </div>
+                         </div>
+                        <div class="row justify-content-md-center mt-5">
+                            <div class="col d-flex justify-content-center">
+                                <button [disabled]="!form.valid" 
+                                        class="btn btn-outline-secondary "
+                                        type="submit"
+                                        >
+                                Login</button>
+                            </div>
+                        </div>
+                <!--                      botones para registrarse y forgot pass-->
+                        <div class="row my-3 my-5">
+                            <div class="col d-flex justify-content-start align-items-center">
+                                <a class="icon-link icon-link-hover" style="--bs-link-hover-color-rgb: 202, 2, 126;" href="/admin">Forgot pass
+                                    <i class="bi bi-arrow-bar-right"> </i>
+                                </a>
+                            </div>
+                            <div class="col d-flex justify-content-end align-items-center">
+                                <a class="icon-link icon-link-hover" style="--bs-link-hover-color-rgb: 202, 2, 126;" (click)="onRegistrarme()">Registrarme
+                                    <i class="bi bi-arrow-bar-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+             <!--    @if(alert){
+                    <div class="alert alert-success" role="alert">
+                        Ya estás registrado, ahora podés iniciar sesión
+                    </div>
+                } -->
+            </div>
+        </div>
+    </div>
+</div>
+
+

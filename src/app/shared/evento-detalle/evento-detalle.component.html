@@ -1,0 +1,19 @@
+  <div class="modal fade " [id]="idModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">{{ evento?.nombre }}</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body ">
+            <p><strong>Fecha:</strong> {{ evento?.fecha | date: 'dd-MM-yyyy' }}</p>
+            <p><strong>Ubicación:</strong> {{ evento?.ubicacion }}</p>
+            <p><strong>Descripción:</strong> {{ evento?.descripcion }}</p>
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Usuarios confirmados</h1>
+            <app-lista-confirmados  [evento]="evento" [funcionPagina]="funcionPagina"></app-lista-confirmados>
+        </div>
+        <div class="modal-footer">
+        </div>
+      </div>
+    </div>
+  </div>

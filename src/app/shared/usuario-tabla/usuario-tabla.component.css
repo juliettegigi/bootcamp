@@ -1,0 +1,45 @@
+.btn-disabled{
+     background-color: #ccc; 
+      cursor: not-allowed; 
+      opacity: 0.6; 
+      color:#198754
+}
+
+.btn-confirmado{
+    background-color: #ccc;  
+     opacity: 0.6; 
+     color:#198754
+}
+
+.btn-pendiente {
+    background-color: #ff9900;
+    color: #fff;
+    cursor: pointer;
+    }
+
+
+
+
+    
+    .table-row-button {
+        display: table-row;
+        width: 100%;
+        background: transparent;
+        border: none;
+        padding: 0;
+        cursor: pointer;
+      }
+      
+      .table-row-button tr {
+        display: table-row;
+      }
+      
+      .table-row-button td, .table-row-button th {
+        padding: 8px;
+        border-top: 1px solid #dee2e6;
+      }
+      
+      .table-row-button:focus {
+        outline: none;
+      }
+      

@@ -1,0 +1,20 @@
+@if(evento){
+
+  <ul class="list-group list-group-flush">
+    @for(usuario of usuariosConfirmados;track $index){
+   
+      <li class="list-group-item">{{usuario.id}} - {{usuario.nombre}}</li>
+    }
+     </ul>
+   
+     <app-pagination [PAGES_CANTIDADxGRUPO]="PAGES_CANTIDADxGRUPO" 
+     [funcionPagina]="funcionPagina"
+     [LIMIT]="LIMIT"
+     (emitirArrPaginado)="recibirUsuariosConfirmados($event)"/>
+}
+
+
+
+
+
+  

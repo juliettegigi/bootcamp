@@ -1,0 +1,11 @@
+.btn-presente {
+    /* Estilos para cuando usuario.isPresente es 1 */
+    background-color: green;
+    color: white;
+  }
+  
+  .btn-ausente {
+    /* Estilos para cuando usuario.isPresente es diferente de 1 */
+    background-color: red;
+    color: white;
+  }
