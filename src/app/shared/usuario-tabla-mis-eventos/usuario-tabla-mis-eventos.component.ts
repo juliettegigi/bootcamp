@@ -21,7 +21,7 @@ export class UsuarioTablaMisEventosComponent {
   private participacionApi=inject(ParticipacionApiService);
   private userId = parseInt(localStorage.getItem('userId') ?? '', 10);
   eventoSeleccionado?: Evento;
- 
+
 
   /* para el paginado */
   LIMIT=AppConstants.LIMIT_TABLA_EVENTOS;
@@ -30,7 +30,7 @@ export class UsuarioTablaMisEventosComponent {
  
   recibirEventos(arr:Evento[]){
     this.eventos=arr;  
-
+console.log("ME EJECUTO")
       while(this.eventos.length%this.LIMIT!==0){
       this.eventos.push(null as any)
     }  
@@ -43,7 +43,7 @@ export class UsuarioTablaMisEventosComponent {
 
   onDescargarPDF(evento: Evento,event: any): void {
     event.stopPropagation();
-   this.participacionApi.generarPDF().subscribe({
+   this.participacionApi.generarPDF(evento.id).subscribe({
     next: (blob:Blob) => {
       const link = document.createElement('a');
       link.href = URL.createObjectURL(blob);

@@ -23,7 +23,7 @@ export class UsuarioTablaComponent {
   eventos:Evento[]=[];
   private eventoApi=inject(EventoApiService);
   private participacionApi=inject(ParticipacionApiService);
-  private userId = parseInt(localStorage.getItem('userId') ?? '', 10);
+  private userId = parseInt(localStorage.getItem('userId') || '0');
   registrado: { [key: number]: number } = {};
   confirmado: { [key: number]: number } = {};
   eventoSeleccionado?: Evento;
@@ -45,27 +45,39 @@ export class UsuarioTablaComponent {
 
 
   onRegistrarme(eventoId:number,event:MouseEvent){
-    console.log("me ejecuto")
-    event.stopPropagation()
-    if(this.registrado[eventoId] !== 0) return
-    console.log("respondo")
-    this.participacionApi.createParticipacion(this.userId,eventoId).subscribe({
-      next:(participacionId:number)=>{
-        
-      },
-      error:(error)=>{
-        console.log("error",error)
-      }
-  })
+    event.stopPropagation();
+    const participacionId=this.registrado[(eventoId)] ;
+    if(participacionId !== 0){//eliminar
+      
+      this.participacionApi.eliminarParticipacion( participacionId ).subscribe({
+        next:(rta)=>{
+          this.registrado[(eventoId)]=0; 
+        },
+        error:(error)=>{
+          console.log("error",error)
+        }
+    })
+    }
+    else{
+             //if(this.registrado[eventoId] !== 0) return
+             this.participacionApi.createParticipacion(this.userId,eventoId).subscribe({
+               next:(participacionId:number)=>{
+                 this.registrado[(eventoId)]=participacionId; 
+               },
+               error:(error)=>{
+                 console.log("error",error)
+               }
+           })
+    }
   }
 
+ 
 
   isRegistrado(eventoId: number) {
     this.participacionApi.isRegistrado(this.userId, eventoId).subscribe({
     next: (participacionId: number) => {
         this.registrado[eventoId] = participacionId;
-       
-        this.participacionApi.isConfirmado(participacionId).subscribe({
+       this.participacionApi.isConfirmado(participacionId).subscribe({
           next: (participacionId: number) => {
               this.confirmado[eventoId]=participacionId;
           },

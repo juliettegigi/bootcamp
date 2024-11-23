@@ -1,6 +1,7 @@
 .btn-disabled{
      background-color: #ccc; 
-      cursor: not-allowed; 
+   
+      cursor:url('/img/trash.svg'), default;
       opacity: 0.6; 
       color:#198754
 }

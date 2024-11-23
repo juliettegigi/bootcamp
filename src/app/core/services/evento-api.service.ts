@@ -49,6 +49,9 @@ getEventosByUsuarioIsPresente(usuarioId:number,limit:number,offset:number){
 
 
 private handleError(error:HttpErrorResponse){
+     if (error.status === 401) {
+    window.location.href = 'http://localhost:4200/';
+   }  
     let errorMessage;
     if(error.error instanceof ErrorEvent){
        errorMessage=`Error: ${error.error.message}`

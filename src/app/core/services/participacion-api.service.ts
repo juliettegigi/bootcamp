@@ -26,8 +26,11 @@ export class ParticipacionApiService {
   isConfirmado(participacionId:number){
     return this.http.get<number>(`http://localhost:3000/participaciones/isConfirmado/${participacionId}`,{ withCredentials: true}).pipe(catchError(this.handleError))
   }
-  generarPDF() { 
-    return this.http.get<Blob>(`http://localhost:3000/participaciones/pdf`, {
+  eliminarParticipacion(id:number){
+    return this.http.delete(`http://localhost:3000/participaciones/${id}`,{ withCredentials: true}).pipe(catchError(this.handleError))
+  }
+  generarPDF(eventoId:number) { 
+    return this.http.get<Blob>(`http://localhost:3000/participaciones/pdf/${eventoId}`, {
       responseType: 'blob' as 'json',
       withCredentials: true
     }).pipe(catchError(this.handleError));
@@ -35,6 +38,9 @@ export class ParticipacionApiService {
 
 
   private handleError(error:HttpErrorResponse){
+       if (error.status === 401) {
+           window.location.href = 'http://localhost:4200/';
+      }
          let errorMessage;
          if(error.error instanceof ErrorEvent){
             errorMessage=`Error: ${error.error.message}`

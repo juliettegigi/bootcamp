@@ -36,7 +36,6 @@ export class FormIniciarSesionComponent {
   } */
 
     onSubmit(){
-      console.log("queeeeeeeeeeeee")
       this.form.markAllAsTouched();
       const email = this.email?.value || ''; 
       const password = this.password?.value || '';
@@ -47,8 +46,8 @@ export class FormIniciarSesionComponent {
            localStorage.setItem('userRole',rol);
            localStorage.setItem('userId',response.usuario.id.toString());
            
-           const cookie = document.cookie;
-           localStorage.setItem('sessionCookie', cookie); 
+          // const cookie = document.cookie;
+          // localStorage.setItem('sessionCookie', cookie); 
            if(rol=='USUARIO')
               this.router.navigate(['usuarios']);
            else if(rol=='ORGANIZADOR')

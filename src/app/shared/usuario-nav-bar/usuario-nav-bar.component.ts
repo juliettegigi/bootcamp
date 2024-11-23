@@ -9,8 +9,10 @@ import { Component , EventEmitter, Output } from '@angular/core';
 })
 export class UsuarioNavBarComponent {
   @Output() emitirSeleccionado = new EventEmitter<string>();
-
+  activeSection =""
   onSeleccionado(strr:string) {
+    console.log(strr)
+    this.activeSection =strr
     this.emitirSeleccionado.emit(strr);
   }
 }

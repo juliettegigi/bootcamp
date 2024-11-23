@@ -28,7 +28,7 @@ export class PaginationComponent {
   private primeraPag=1;
   private grupos=1;
   private group=1;
-  private paginas=1;
+   paginas=1;
    page=1;
   iterador: Iterador | null = null; 
 
@@ -36,6 +36,7 @@ export class PaginationComponent {
 
     this.funcionPagina(this.LIMIT,this.LIMIT-this.LIMIT).subscribe({
       next:({registros,total})=>{
+        
            this.tableElements=registros;
            this.totalRegistros=total
            this.paginas=Math.ceil(this.totalRegistros/this.LIMIT);//2pag

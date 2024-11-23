@@ -1,4 +1,5 @@
 <div class="container">
+  @if(eventos.length!==0){
     <table class="table table-hover">
         <thead>
             <tr>
@@ -39,6 +40,10 @@
         </tbody>
 
     </table>
+  }
+  @else{
+    <p>No eventos</p>
+  }
     
     <app-pagination (emitirArrPaginado)="recibirEventos($event)"
                     [PAGES_CANTIDADxGRUPO]="PAGES_CANTIDADxGRUPO" 
@@ -70,6 +75,3 @@
 <!-- modal del ver detalle -->
 
   <app-evento-detalle [idModal]="'detalleModal'" [funcionPagina]="funcionPagina2" [evento]="eventoSeleccionado"></app-evento-detalle>
-
-
- 

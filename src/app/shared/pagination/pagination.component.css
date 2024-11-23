@@ -1,0 +1,29 @@
+/* Cambia el color del fondo y texto de los enlaces de paginación */
+.page-link {
+    color: #000; /* Cambia el color del texto */
+    background-color: #f8f9fa; /* Fondo claro */
+    border: 1px solid #ddd; /* Bordes */
+  }
+  
+  .page-link:hover {
+    color: #fff; /* Color de texto al pasar el mouse */
+    background-color:#D8D8D8; /* Fondo azul al pasar el mouse */
+    text-decoration: none; /* Elimina el subrayado */
+  }
+  
+  /* Estilo del elemento activo */
+  .page-item.active .page-link {
+    color: #007bff; /* Texto blanco */
+    background-color: #F8F9FA; /* Fondo azul */
+    border-color: #007bff; /* Bordes azules */
+    font-weight: bolder;
+  }
+  
+  /* Estilo para los íconos SVG */
+  .page-link svg {
+    fill: #000; /* Cambia el color del ícono */
+  }
+  
+  .page-link:hover svg {
+    fill:#007bff; /* Cambia el color del ícono al pasar el mouse */
+  }
