@@ -28,8 +28,8 @@ export class UsuarioTablaMisEventosComponent {
   readonly PAGES_CANTIDADxGRUPO=3;
   funcionPagina=(limit: number, offset: number) => this.eventoApi.getEventosByUsuarioIsPresente(this.userId,limit,offset);
  
-  recibirEventos(arr:Evento[]){
-    this.eventos=arr;  
+  recibirEventos({ arregloRegistrosPorPag, totalRegistros }: { arregloRegistrosPorPag: any[], totalRegistros: number }){
+    this.eventos=arregloRegistrosPorPag;  
 console.log("ME EJECUTO")
       while(this.eventos.length%this.LIMIT!==0){
       this.eventos.push(null as any)

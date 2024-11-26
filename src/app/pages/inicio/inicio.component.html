@@ -1,7 +1,7 @@
 <!-- Barra de navegación superior fija en la parte superior de la pantalla -->
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
     <div class="container-fluid">
-      <a class="navbar-brand ms-auto" href="#">Cerrar sesión</a>
+      <a class="navbar-brand ms-auto" (click)="logOut()">Cerrar sesión</a>
     </div>
 </nav>
   
@@ -14,7 +14,7 @@
     <div class="content" style="margin-left: 200px; padding: 20px; overflow-y: auto; height: calc(100vh - 56px);">
         @switch (seleccion) {
             @case ("lista") {
-                <app-evento-search (emitirInput)="recibirInput($event)"></app-evento-search>
+                <app-evento-search (emitirInput)="recibirInput($event)" [placeholder]="'Buscar(id, nombre)'"></app-evento-search>
                 <app-evento-tabla (emitirAsistenciaPorEvento)="recibirEventoAsistencia($event)" [idOrName]="idOrName"/> 
             }
             @case("asistencia"){

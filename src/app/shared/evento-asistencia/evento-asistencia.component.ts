@@ -21,17 +21,15 @@ export class EventoAsistenciaComponent {
   PAGES_CANTIDADxGRUPO=3;
   LIMIT=AppConstants.LIMIT_LISTA_USUARIOS;
   usuariosDelEvento?:UsuarioMasPresenteYconfirmado[];
-  //funcionPagina!: (limit: number, offset: number) => Observable<any>;
   private usuarioApi=inject(UsuarioApiService);
   private participacionApi=inject(ParticipacionApiService);
   
 
 
   funcionPagina =(limit:number,offset:number)=> this.usuarioApi.getUsuariosPorEvento(this.evento!.id,limit,offset);
-  //@Input() evento?:Evento ;
  
-  recibirUsuarios(arr:UsuarioMasPresenteYconfirmado[]){
-    this.usuariosDelEvento=arr;
+  recibirUsuarios({arregloRegistrosPorPag,totalRegistros,}: {arregloRegistrosPorPag: any[];totalRegistros: number;}){
+    this.usuariosDelEvento=arregloRegistrosPorPag;
 }
 
 onSetPresente(usuarioId:number,index:number){
@@ -50,7 +48,10 @@ onSetPresente(usuarioId:number,index:number){
 
 
 reciboInputValue(inputValue:string){
-  this.funcionPagina =(limit:number,offset:number)=> this.usuarioApi.getUsuariosPorEvento2(inputValue,this.evento!.id,limit,offset);
+  if(inputValue==""){
+    this.funcionPagina =(limit:number,offset:number)=> this.usuarioApi.getUsuariosPorEvento(this.evento!.id,limit,offset);
+  }
+  else this.funcionPagina =(limit:number,offset:number)=> this.usuarioApi.getUsuariosPorEvento2(inputValue,this.evento!.id,limit,offset);
 }
   
 }

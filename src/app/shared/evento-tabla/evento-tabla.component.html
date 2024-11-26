@@ -1,5 +1,5 @@
 <div class="container">
-  @if(eventos.length!==0){
+  @if(totalRegistros!==0){
     <table class="table table-hover">
         <thead>
             <tr>
@@ -48,7 +48,9 @@
     <app-pagination (emitirArrPaginado)="recibirEventos($event)"
                     [PAGES_CANTIDADxGRUPO]="PAGES_CANTIDADxGRUPO" 
                     [funcionPagina]="funcionPagina"
-                    [LIMIT]="LIMIT"/>
+                    [LIMIT]="LIMIT"
+                    [eliminar]="eliminar"
+                    />
 </div>
 
 

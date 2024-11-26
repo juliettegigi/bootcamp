@@ -9,9 +9,10 @@ export function isFechaPasada(): ValidatorFn {
       if (dia && mes && anio) {
         const fechaIngresada = new Date(anio, mes - 1, dia); // Mes empieza desde 0
         const fechaActual = new Date();
-  
+        fechaIngresada.setHours(0, 0, 0, 0)
+        fechaActual.setHours(0, 0, 0, 0)
         // Compara las fechas
-        if (fechaIngresada <= fechaActual) {
+        if (fechaIngresada < fechaActual) {
           return { isFechaPasada: true }; // La fecha no es válida
         }
       }

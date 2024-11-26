@@ -1,8 +1,7 @@
-import { Component,  Input,OnChanges, Output, SimpleChanges,EventEmitter } from '@angular/core';
+import { Component,  Input, Output, SimpleChanges,EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';
 import { Iterador } from '../../utils/iterador';
-import { Evento } from '../../models/evento';
 
 @Component({
   selector: 'app-pagination',
@@ -15,16 +14,16 @@ import { Evento } from '../../models/evento';
 export class PaginationComponent {
 
 
+  @Input() eliminar!: boolean;
   @Input() PAGES_CANTIDADxGRUPO=3;
   @Input() funcionPagina!: (limit: number, offset: number) => Observable<any>;
   @Input() LIMIT=5;
-  //@Input() objSubscribe!: (tableElementos: any[]) => { next: (response: any[]) => void; error: (error: any) => void };
-  @Output() emitirArrPaginado = new EventEmitter<any[]>();
+  @Output() emitirArrPaginado = new EventEmitter<{arregloRegistrosPorPag: any[], totalRegistros:number}>();
   totalRegistros=0;
   tableElements: any[] = [];
   
   
-  private ultimaPag=0;
+  private ultimaPag=1;
   private primeraPag=1;
   private grupos=1;
   private group=1;
@@ -33,46 +32,60 @@ export class PaginationComponent {
   iterador: Iterador | null = null; 
 
   ngOnInit():void{
-
+    this.group=1;
+    this.page=1;
     this.funcionPagina(this.LIMIT,this.LIMIT-this.LIMIT).subscribe({
       next:({registros,total})=>{
         
-           this.tableElements=registros;
-           this.totalRegistros=total
-           this.paginas=Math.ceil(this.totalRegistros/this.LIMIT);//2pag
-           this.grupos=Math.ceil(this.paginas/this.PAGES_CANTIDADxGRUPO);
-           this.ultimaPag=this.group*this.PAGES_CANTIDADxGRUPO
-           this.ultimaPag=this.ultimaPag>this.paginas?this.paginas:this.ultimaPag;
-           this.iterador=new Iterador(this.primeraPag,this.ultimaPag); 
-           this.emitirArrPaginado.emit(this.tableElements);
+           this.cambiaTotal(registros,total)
       },
       error:(error)=>{
         console.log("error",error)
-        this.emitirArrPaginado.emit([]);
+        this.totalRegistros=0
+        this.emitirArrPaginado.emit({arregloRegistrosPorPag:[],totalRegistros:0});
       }
   })          
     }
+   
+
+    cambiaTotal(registros:any,total:number){
+      this.tableElements=registros;
+      this.totalRegistros=total
+      this.paginas=Math.ceil(this.totalRegistros/this.LIMIT);//2pag
+      this.grupos=Math.ceil(this.paginas/this.PAGES_CANTIDADxGRUPO);
+      this.ultimaPag=this.group*this.PAGES_CANTIDADxGRUPO
+      this.primeraPag=this.ultimaPag-this.PAGES_CANTIDADxGRUPO+1;
+      this.ultimaPag=this.ultimaPag>this.paginas?this.paginas:this.ultimaPag;
+      this.iterador=new Iterador(this.primeraPag,this.ultimaPag);
+      this.emitirArrPaginado.emit({arregloRegistrosPorPag:registros,totalRegistros:total});
+    }
 
     ngOnChanges(changes: SimpleChanges) {
-      if (changes['funcionPagina'] && changes['funcionPagina'].currentValue !== changes['funcionPagina'].previousValue) {
-        this.funcionPagina(this.LIMIT,this.LIMIT-this.LIMIT).subscribe({
-          next:({registros,total})=>{
-               this.tableElements=registros;
-               this.totalRegistros=total
-               this.paginas=Math.ceil(this.totalRegistros/this.LIMIT);//2pag
-               this.grupos=Math.ceil(this.paginas/this.PAGES_CANTIDADxGRUPO);
-               this.ultimaPag=this.group*this.PAGES_CANTIDADxGRUPO
-               this.ultimaPag=this.ultimaPag>this.paginas?this.paginas:this.ultimaPag;
-               this.iterador=new Iterador(this.primeraPag,this.ultimaPag);
-               this.emitirArrPaginado.emit(this.tableElements);
-          },
-          error:(error)=>{
-            console.log("error",error)
-            this.emitirArrPaginado.emit([]);
-          }
-      })   
-      }
+      if (changes['funcionPagina'] ){
+        this.ngOnInit()
 
+      } 
+      if (changes['eliminar'] ){
+       this.funcionPagina(this.LIMIT,this.page*this.LIMIT-this.LIMIT).subscribe({
+        next:({registros,total})=>{
+          if(registros.length===0 && this.page!==1){
+            this.page--
+            if(Math.ceil(this.page/this.PAGES_CANTIDADxGRUPO)<this.group)
+              this.group--
+            this.pedirPag(this.page)
+          }
+          else
+            this.cambiaTotal(registros,total)
+        },
+        error:(error)=>{
+          console.log("error",error)
+          this.totalRegistros=0
+          this.emitirArrPaginado.emit({arregloRegistrosPorPag:[],totalRegistros:0});
+        }
+    })
+
+      } 
+     
     }
   
   
@@ -91,17 +104,15 @@ export class PaginationComponent {
   }
 
   pedirPag(x:number){
-    //2   (5,0)  his.usuarioApi.getUsuariosConfirmados(this.evento!.id,limit,offset)
+    if(x===0)return
       this.funcionPagina(this.LIMIT,x*this.LIMIT-this.LIMIT).subscribe({
           next:({registros,total})=>{
-               this.tableElements=registros;
-               this.totalRegistros=total;
-               
-               this.emitirArrPaginado.emit(this.tableElements);
+            this.cambiaTotal(registros,total)
           },
           error:(error)=>{
             console.log("error",error)
-            this.emitirArrPaginado.emit([]);
+            this.totalRegistros=0
+            this.emitirArrPaginado.emit({arregloRegistrosPorPag:[],totalRegistros:0});
           }
       })
   }
@@ -114,7 +125,6 @@ export class PaginationComponent {
     this.pedirPag(this.page);
   } 
   nextPag(){ //avanza de a 1 página
-    console.log("first33  ",this.totalRegistros)
     this.next2(1)
   }
   nextPaginversa(){

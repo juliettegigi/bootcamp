@@ -1,5 +1,6 @@
-@if(totalRegistros!==0 && paginas!==1)
-{<nav>
+@if(totalRegistros){
+    
+    <nav>
     <ul class="pagination">
         <li class="page-item">
             <a class="page-link" aria-label="Previous" (click)="nextBloqueInversa()">

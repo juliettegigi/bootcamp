@@ -9,8 +9,10 @@ import { Component , EventEmitter, Output} from '@angular/core';
 })
 export class NavBarComponent {
   @Output() emitirSeleccionado = new EventEmitter<string>();
-
+  activeSection =""
+  tieneRolUsuario=localStorage.getItem('userRoles')?.includes('USUARIO');
   onSeleccionado(strr:string) {
+    this.activeSection =strr
     this.emitirSeleccionado.emit(strr);
   }
 

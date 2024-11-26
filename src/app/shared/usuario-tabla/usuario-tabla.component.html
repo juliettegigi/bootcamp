@@ -1,5 +1,6 @@
 <div class="container">
-    <table class="table table-hover">
+  @if(eventos.length!==0){
+  <table class="table table-hover">
         <thead>
             <tr>
               <th scope="col">Fecha</th>
@@ -50,7 +51,11 @@
         </tbody>
 
     </table>
-    
+  }
+  @else {
+    <p>No eventos próximos</p>
+  }
+  
     <app-pagination (emitirArrPaginado)="recibirEventos($event)"
                     [PAGES_CANTIDADxGRUPO]="PAGES_CANTIDADxGRUPO" 
                     [funcionPagina]="funcionPagina"

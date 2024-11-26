@@ -1,19 +1,18 @@
-import { Component ,inject} from '@angular/core';
+import {inject, Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { NavBarComponent } from '../../shared/nav-bar/nav-bar.component';
 import { EventoSearchComponent } from '../../shared/evento-search/evento-search.component';
 import { EventoTablaComponent } from '../../shared/evento-tabla/evento-tabla.component';
-import { EventoApiService } from '../../core/services/evento-api.service';
-import { SetPresenteComponent } from '../../shared/set-presente/set-presente.component';
 import { EventoAsistenciaComponent } from '../../shared/evento-asistencia/evento-asistencia.component';
 import { Evento } from '../../models/evento';
 import { Usuario } from '../../models/usuario';
 import { EventoFormularioComponent } from '../../shared/evento-formulario/evento-formulario.component';
+import { UsuarioApiService } from '../../core/services/usuario-api.service';
 
 @Component({
   selector: 'app-inicio',
   standalone: true,
-  imports: [SetPresenteComponent,NavBarComponent,EventoSearchComponent,EventoTablaComponent,EventoAsistenciaComponent,EventoFormularioComponent],
+  imports: [NavBarComponent,EventoSearchComponent,EventoTablaComponent,EventoAsistenciaComponent,EventoFormularioComponent],
   templateUrl: './inicio.component.html',
   styleUrl: './inicio.component.css'
 })
@@ -23,10 +22,9 @@ export class InicioComponent {
   usuariosPorEvento?:Usuario[];
   idOrName=""
   evento?:Evento;
-  private eventoApi=inject(EventoApiService);
   
   constructor(private router: Router) {}
-  
+  private usuarioApi=inject(UsuarioApiService);
 
 
   recibirSeleccionado(item: string) {
@@ -35,6 +33,8 @@ export class InicioComponent {
   }
 
 
+  /* recibo el input y se lo paso al otro componente, a la tabla */
+
 recibirInput( idOrName:string ) {
   this.idOrName=idOrName;
 }
@@ -42,11 +42,21 @@ recibirInput( idOrName:string ) {
 recibirEventoAsistencia(evento:Evento){
       this.seleccion="asistencia"
       this.evento=evento;
-      // llamada a la api
+      
 }
 logOut(): void {
-  localStorage.clear();
-  this.router.navigate(['/']);
+  
+  this.usuarioApi.logOut().subscribe({
+    next:(rta)=>{
+      localStorage.clear();
+      this.router.navigate(['/']);
+    },
+    error:(error)=>{
+       console.log("error",error)
+       
+    }
+   })  
+  
 }
 
 ​}

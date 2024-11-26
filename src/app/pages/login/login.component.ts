@@ -16,4 +16,3 @@ export class LoginComponent {
 
 
 }
-//siempre debería validar q ele pass2 es igual al 1

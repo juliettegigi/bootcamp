@@ -14,11 +14,11 @@ export class EventoApiService {
     return this.http.get<Evento>(`http://localhost:3000/eventos/${id}`,{ withCredentials: true}).pipe(catchError(this.handleError))
 }
   getEventoByIdOrName(idName:string,limit=1,offset=0){
-    return this.http.get<ResponseGetByIdOrName>(`http://localhost:3000/eventos/idNombre/${idName}?limit=${limit}&offset=${offset}`,{ withCredentials: true}).pipe(catchError(this.handleError))
+    return this.http.get<ResponseGetByIdOrName>(`http://localhost:3000/eventos/idNombre/${idName}?limit=${limit}&offset=${offset}`,{ withCredentials: true})
 }
 
 getEventosPag(limit:number,offset:number){
-    return this.http.get<ResponseGetByIdOrName>(`http://localhost:3000/eventos/pag?limit=${limit}&offset=${offset}`,{ withCredentials: true}).pipe(catchError(this.handleError))
+    return this.http.get<ResponseGetByIdOrName>(`http://localhost:3000/eventos/pag?limit=${limit}&offset=${offset}`,{ withCredentials: true})
 }
 
 getTotalEventos(){
@@ -40,11 +40,11 @@ editarEvento(id:number,nombre: string, fecha: string, ubicacion: string, descrip
 
 
  getEventosProximos(limit: number, offset: number) {
-    return this.http.get(`http://localhost:3000/eventos/proximos?limit=${limit}&offset=${offset}`, { withCredentials: true}).pipe(catchError(this.handleError));
+    return this.http.get(`http://localhost:3000/eventos/proximos?limit=${limit}&offset=${offset}`, { withCredentials: true})
   } 
 
 getEventosByUsuarioIsPresente(usuarioId:number,limit:number,offset:number){
-  return this.http.get<ResponseGetByIdOrName>(`http://localhost:3000/eventos/usuarioPresente/${usuarioId}?limit=${limit}&offset=${offset}`,{ withCredentials: true}).pipe(catchError(this.handleError))
+  return this.http.get<ResponseGetByIdOrName>(`http://localhost:3000/eventos/usuarioPresente/${usuarioId}?limit=${limit}&offset=${offset}`,{ withCredentials: true})
 }
 
 
@@ -71,14 +71,3 @@ private handleError(error:HttpErrorResponse){
 
 
 
-
-/*  getEventosProximos(limit:number,offset:number){
-  return this.http.get<number>(`http://localhost:3000/eventos/proximos?limit=${limit}&offset=${offset}` )
-}  */
-
-  /*   const cookie = localStorage.getItem('sessionCookie');
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
-      ...(cookie && { 'Cookie': cookie })
-    }); */

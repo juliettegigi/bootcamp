@@ -31,8 +31,8 @@ export class UsuarioTablaComponent {
   LIMIT=AppConstants.LIMIT_TABLA_EVENTOS;
   readonly PAGES_CANTIDADxGRUPO=3;
   funcionPagina=(limit: number, offset: number) => this.eventoApi.getEventosProximos(limit, offset);
-  recibirEventos(arr:Evento[]){
-    this.eventos=arr;
+  recibirEventos({ arregloRegistrosPorPag, totalRegistros }: { arregloRegistrosPorPag: any[], totalRegistros: number }){
+    this.eventos=arregloRegistrosPorPag;
 
     this.eventos.forEach(evento => {
       this.isRegistrado((evento.id));

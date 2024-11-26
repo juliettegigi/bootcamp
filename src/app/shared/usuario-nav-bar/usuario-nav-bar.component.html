@@ -8,6 +8,11 @@
         <li class="nav-item"  [class.active]="activeSection === 'misEventos'" >
           <a class="nav-link"(click)='onSeleccionado("misEventos")'>Mis eventos</a>
         </li>
+        @if(tieneRolOrganizador){
+          <li class="nav-item"  >
+          <a class="nav-link" href="http://localhost:4200/inicio">Ingresar como organizador</a>
+        </li>
+        }
       </ul>
     </nav>   
 </div>

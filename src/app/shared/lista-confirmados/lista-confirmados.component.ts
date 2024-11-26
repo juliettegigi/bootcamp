@@ -25,8 +25,8 @@ export class ListaConfirmadosComponent {
   
   
  
-  recibirUsuariosConfirmados(arr:Usuario[]){
-    this.usuariosConfirmados=arr;
+  recibirUsuariosConfirmados({ arregloRegistrosPorPag, totalRegistros }: { arregloRegistrosPorPag: any[], totalRegistros: number }){
+    this.usuariosConfirmados=arregloRegistrosPorPag;
     while(this.usuariosConfirmados.length%this.LIMIT!=0){
       this.usuariosConfirmados.push(null as any)
     }

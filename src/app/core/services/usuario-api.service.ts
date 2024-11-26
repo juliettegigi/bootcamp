@@ -20,18 +20,23 @@ export class UsuarioApiService {
             'Accept': 'application/json'
           });
           return this.http.post<UsuarioResponse>(  'http://localhost:3000/auth', { email, pass },{ withCredentials: true})
-            .pipe(catchError(this.handleError));
         }
+
+
+  logOut(){
+    return this.http.delete(`http://localhost:3000/auth`,{ withCredentials: true})
+  }  
 
   getUsuariosConfirmados(eventoId:number,limit:number,offset:number){
     return this.http.get<rtaGetConfirmados>(`http://localhost:3000/usuarios/confirmados/${eventoId}?limit=${limit}&offset=${offset}`,{ withCredentials: true}).pipe(catchError(this.handleError))
 }
 
+/* busco todos los usuarios de un evento */
 getUsuariosPorEvento(eventoId:number,limit:number,offset:number){
   return this.http.get<rtaGetAllPorEvento>(`http://localhost:3000/usuarios/all/${eventoId}?limit=${limit}&offset=${offset}`,{ withCredentials: true}).pipe(catchError(this.handleError))
 }
 
-
+// busca por id, nombre del user y evento
 getUsuariosPorEvento2(usuario:string,eventoId:number,limit:number,offset:number){
   return this.http.get<rtaGetAllPorEvento>(`http://localhost:3000/usuarios/all2/${usuario}/${eventoId}?limit=${limit}&offset=${offset}`,{ withCredentials: true}).pipe(catchError(this.handleError))
 }

@@ -20,13 +20,13 @@ import { Observable } from 'rxjs';
   styleUrl: './evento-tabla.component.css'
 })
 export class EventoTablaComponent {
-   @Input() totalEventos=0;
    @Input() idOrName="";
    @Output() emitirAsistenciaPorEvento = new EventEmitter<Evento>();
+   eliminar=false;
    eventos:Evento[]=[];
    fechaActual= new Date(); 
    yaSeEdito=false;
-
+   totalRegistros=0;
    private usuarioApi=inject(UsuarioApiService);
 
    
@@ -42,12 +42,13 @@ export class EventoTablaComponent {
   funcionPagina=(limit: number, offset: number) => this.eventoApi.getEventosPag(limit, offset);
   funcionPagina2!: (limit: number, offset: number) => Observable<any>;
 
-                           ngOnChanges(changes: SimpleChanges) {
-                              if (changes['idOrName']) {
-                              this.funcionPagina = !this.idOrName?(limit: number, offset: number) => this.eventoApi.getEventosPag(limit, offset)
-                              : (limit: number, offset: number) => this.eventoApi.getEventoByIdOrName(this.idOrName,limit, offset) ;
-                              }
-                              }
+   ngOnChanges(changes: SimpleChanges) {
+         if (changes['idOrName']) {
+             this.funcionPagina = !this.idOrName
+                                  ?(limit: number, offset: number) => this.eventoApi.getEventosPag(limit, offset)
+                                  : (limit: number, offset: number) => this.eventoApi.getEventoByIdOrName(this.idOrName,limit, offset) ;
+         }
+   }
                               
 
  
@@ -57,9 +58,9 @@ export class EventoTablaComponent {
    OnBorrarEventoLogico(index:number){
           this.eventoApi.borrarEventoLogico(this.eventos[index].id).subscribe({
             next:(rta)=>{
-               console.log(rta)
-               this.eventos.splice(index, 1)
-               this.totalEventos--;
+               this.eventos[index]=null as any;
+               this.eliminar=!this.eliminar;
+           
             },
             error:(error)=>{
                console.log("error",error)
@@ -79,15 +80,16 @@ export class EventoTablaComponent {
       this.funcionPagina2=(limit: number, offset: number) =>this.usuarioApi.getUsuariosConfirmados(this.eventoSeleccionado!.id,limit,offset);
       
    }
-
-   recibirEventos(arr:Evento[]){
-          this.eventos=arr;
-            while(this.eventos.length%this.LIMIT!==0){
-            this.eventos.push(null as any)
-            console.log("a verrr... ",this.eventos[this.eventos.length-1])
-          }  
+  // this.emitirArrPaginado.emit({arregloRegistrosPorPag:[],totalRegistros:0});
+  recibirEventos({ arregloRegistrosPorPag, totalRegistros }: { arregloRegistrosPorPag: any[], totalRegistros: number }) {
+   
+   
+   this.totalRegistros=totalRegistros;
+   this.eventos = arregloRegistrosPorPag;
+   while (this.eventos.length % this.LIMIT !== 0) {
+     this.eventos.push(null as any);
    }
-
+ }
    btnAsistenciaClickeada(index:number){
       this.eventoSeleccionado =this.eventos[index]
       this.emitirAsistenciaPorEvento.emit(this.eventoSeleccionado)
@@ -96,7 +98,6 @@ export class EventoTablaComponent {
 
    isFechaActual(fechaEvento:string): boolean {
       const fechaEventoFormateada = new Date(fechaEvento).toLocaleDateString('es-ES', { year: 'numeric', month: '2-digit', day: '2-digit' });
-      console.log(fechaEventoFormateada);
       return fechaEventoFormateada === this.fechaActual.toLocaleDateString('es-ES', { year: 'numeric', month: '2-digit', day: '2-digit' });
       }
 
@@ -106,7 +107,6 @@ export class EventoTablaComponent {
       }
       cerrarModal() {
          this.yaSeEdito=false
-         console.log("me ejecuto?")
          }
       
 }

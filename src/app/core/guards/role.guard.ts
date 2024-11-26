@@ -6,10 +6,10 @@ export const roleGuard: CanActivateFn = (route, state) => {
 
   // Verificar si localStorage está disponible
   if (typeof localStorage !== 'undefined') {
-    const role = localStorage.getItem('userRole');
-    if (role === 'USUARIO' && route.url[0].path === 'usuarios') {
+    const roles = localStorage.getItem('userRoles');
+    if (roles?.includes('ORGANIZADOR') && route.url[0].path === 'usuarios') {
       return true;
-    } else if (role === 'ORGANIZADOR' && route.url[0].path === 'inicio') {
+    } else if (roles?.includes('USUARIO') && route.url[0].path === 'inicio') {
       return true;
     } else {
       router.navigate(['']);

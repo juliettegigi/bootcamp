@@ -43,11 +43,9 @@ export class FormIniciarSesionComponent {
       next:(response)=>{
         //si tiene varios roles hacerle elegir
            const rol = response.roles[0].rol;
-           localStorage.setItem('userRole',rol);
+           localStorage.setItem('userRoles',JSON.stringify(response.roles));
            localStorage.setItem('userId',response.usuario.id.toString());
            
-          // const cookie = document.cookie;
-          // localStorage.setItem('sessionCookie', cookie); 
            if(rol=='USUARIO')
               this.router.navigate(['usuarios']);
            else if(rol=='ORGANIZADOR')

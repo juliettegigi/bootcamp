@@ -9,7 +9,7 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
   styleUrl: './evento-search.component.css'
 })
 export class EventoSearchComponent {
-   //@Input() eventos:Evento[]=[];
+   @Input() placeholder="";
    @Output() emitirInput = new EventEmitter<string>();
 
    formulario=new FormGroup({termino:new FormControl('')})
