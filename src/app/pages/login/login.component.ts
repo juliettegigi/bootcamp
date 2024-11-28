@@ -14,5 +14,8 @@ export class LoginComponent {
  iniciarSesion=true;
  alert=false
 
+ ngOnInit(){
 
+   console.log("LOGUIN GUARD")
+ }
 }

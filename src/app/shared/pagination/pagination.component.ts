@@ -40,7 +40,7 @@ export class PaginationComponent {
            this.cambiaTotal(registros,total)
       },
       error:(error)=>{
-        console.log("error",error)
+        console.log("error hereeeee",error)
         this.totalRegistros=0
         this.emitirArrPaginado.emit({arregloRegistrosPorPag:[],totalRegistros:0});
       }

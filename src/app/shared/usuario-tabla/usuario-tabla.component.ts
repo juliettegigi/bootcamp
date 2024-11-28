@@ -1,5 +1,4 @@
 import { Component ,inject} from '@angular/core';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { CommonModule,DatePipe } from '@angular/common';
 import { Evento } from '../../models/evento';
 import { EventoApiService } from '../../core/services/evento-api.service';
@@ -121,8 +120,7 @@ export class UsuarioTablaComponent {
     
   }
   mostrarModal() {
-    console.log("me ejecuto")
-    console.log( this.isModalVisible)
+
     
     this.isModalVisible = true; // Mostrar modal
   }
