@@ -1,0 +1,72 @@
+.btn-disabled{
+    background-color: #ccc; 
+  
+     cursor:url('/img/trash.svg'), default;
+     opacity: 0.6; 
+     color:#198754
+}
+
+.btn-confirmado{
+   background-color: #ccc;  
+    opacity: 0.6; 
+    color:#198754
+}
+
+.btn-pendiente {
+   background-color: #ff9900;
+   color: #fff;
+   cursor: pointer;
+   }
+
+
+
+
+   
+   .table-row-button {
+       display: table-row;
+       width: 100%;
+       background: transparent;
+       border: none;
+       padding: 0;
+       cursor: pointer;
+     }
+     
+     .table-row-button tr {
+       display: table-row;
+     }
+     
+     .table-row-button td, .table-row-button th {
+       padding: 8px;
+       border-top: 1px solid #dee2e6;
+     }
+     
+     .table-row-button:focus {
+       outline: none;
+     }
+     
+
+     /* Estilo para el párrafo */
+p {
+ font-size: 1.2rem; /* Tamaño de fuente ligeramente mayor */
+ color: #333; /* Color de texto oscuro */
+ text-align: center; /* Centra el texto */
+ margin-top: 20px; /* Margen superior */
+ padding: 10px 20px; /* Espaciado alrededor del texto */
+ background-color: #f8f9fa; /* Fondo gris claro */
+ border-radius: 8px; /* Bordes redondeados */
+ box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+ max-width: 80%; /* Ancho máximo */
+ margin-left: auto; /* Centra el contenido en el eje horizontal */
+ margin-right: auto; /* Centra el contenido en el eje horizontal */
+}
+
+/* Estilo para cuando el texto sea importante o de advertencia */
+p.warning {
+ color: #e74c3c; /* Color rojo para advertencia */
+ font-weight: bold; /* Texto en negrita */
+}
+
+/* Opcional: estilo de hover */
+p:hover {
+ background-color: #e9ecef; /* Cambia el fondo cuando el mouse pasa sobre él */
+}

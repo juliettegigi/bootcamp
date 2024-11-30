@@ -43,9 +43,7 @@ export class RegistroComponent {
         this.password2.setValidators([Validators.required, this.passIguales(this.password)]);
      
      this.form.get('password')!.valueChanges.subscribe((value) => {
-      console.log("value ",value)
       this.form.get("password2")?.updateValueAndValidity();
-      console.log(this.password2?.value)
     });
   }
 
@@ -102,24 +100,3 @@ onIniciarSesion(){
 
 
 
-/*   onRegistrarme(){
-    this.form.reset();
-    
-    this.enlaceDer="IniciarSesión"
-    this.funcionDelEnlace=this.onIniciarSecion;
-    if(!this.isRegistrameClickeado){
-         this.nombre?.setValidators([Validators.required])
-         this.password?.setValidators([Validators.minLength(6)])
-         if(this.password)
-           this.password2?.setValidators([Validators.required,this.passIguales(this.password)]);
-       
-         this.form.get('password')!.valueChanges.subscribe((value) => {
-           console.log("value ",value)
-           this.form.get("password2")?.updateValueAndValidity();
-           console.log(this.password2?.value)
-         });
-         this.isRegistrameClickeado=true
-    }
-   
-  
-  } */

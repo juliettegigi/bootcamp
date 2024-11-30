@@ -1,12 +1,11 @@
 import { Component, inject,Input, SimpleChanges, Output ,EventEmitter} from '@angular/core';
-import { Observable } from 'rxjs';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common'; 
 import { EventoApiService } from '../../core/services/evento-api.service';
 import { EventoAgregadoComponent } from '../evento-agregado/evento-agregado.component';
 import { Evento,FechaEvento } from '../../models/evento';
 import { Iterador } from '../../utils/iterador';
-import { isFechaPasada } from '../validators/custom-validators';
+import { isFechaPasada,fechaValida } from '../validators/custom-validators';
 
 
 @Component({
@@ -21,7 +20,7 @@ import { isFechaPasada } from '../validators/custom-validators';
 export class EventoFormularioComponent {
   @Input() isEditar=false; 
   @Input() evento?: Evento;
-  @Output() emitirYaSeEdito= new EventEmitter<void>();
+  @Output() emitirYaSeEdito= new EventEmitter<Evento | string>();
   
   private eventoApi=inject(EventoApiService);
   formulario=true;
@@ -33,27 +32,24 @@ export class EventoFormularioComponent {
                       ubicacion:new FormControl('',[ Validators.required,Validators.maxLength(50)]),
                       descripcion:new FormControl('',[ Validators.required, Validators.maxLength(6000)])
                      },
-                    {validators:isFechaPasada()})
+                     { validators: [isFechaPasada(), fechaValida()] }
+                  )
 
 
 
 
-  ngOnInit(){
-    if(this.isEditar){
-            
-    }
-  }                  
+                 
   ngOnChanges(changes: SimpleChanges) {
-      if(changes['evento'] && this['evento']) {
+      if(changes['evento']) {
                       this.actualizarFormulario();
                       }
-  }     
+  }      
       
   get btnText() {
     return this.isEditar ? "Guardar Cambios" : "Agregar evento";
     
   }
-  actualizarFormulario() {
+   actualizarFormulario() {
     if (this.evento) {
     const fechaEvento = new FechaEvento(this.evento.fecha);
     this.form.patchValue({
@@ -65,7 +61,7 @@ export class EventoFormularioComponent {
     descripcion: this.evento.descripcion
     });
     }
-    }
+    } 
 
   get dia(){return this.form.get('dia')?.value}
   get mes(){return this.form.get('mes')?.value}
@@ -78,7 +74,9 @@ export class EventoFormularioComponent {
     const mes = this.form.get('mes')?.value;
     const anio = this.form.get('anio')?.value;
     if (anio && mes && dia) {
-      return `${anio}-${mes}-${dia}`;
+      const diaFormateado = String(dia).padStart(2, '0'); 
+      const mesFormateado = String(mes).padStart(2, '0'); 
+      return `${anio}-${mesFormateado}-${diaFormateado}`;
     }
     return null;
   }
@@ -92,7 +90,6 @@ export class EventoFormularioComponent {
     if(!this.isEditar){
       this.eventoApi.postEvento( this.nombre || '',this.fecha || '',this.ubicacion || '', this.descripcion || '').subscribe({
                next:(idEvento)=>{
-                    console.log(idEvento)
                     this.form.reset();
                     this.formulario=false;
                },
@@ -103,15 +100,15 @@ export class EventoFormularioComponent {
               })  
       }
     else{
-      //editarEvento(id:number,nombre: string, fecha: string, ubicacion: string, descripcion: string)
+
       this.eventoApi.editarEvento( this.evento!.id,this.nombre || '',this.fecha || '',this.ubicacion || '', this.descripcion || '').subscribe({
         next:(idEvento)=>{
-             console.log(idEvento)
-             this.emitirYaSeEdito.emit();
+             this.evento={id:this.evento!.id,nombre:this.nombre!,fecha:this.fecha!,ubicacion:this.ubicacion!,descripcion:this.descripcion!,isEliminado:this.evento!.isEliminado}
+             this.emitirYaSeEdito.emit(this.evento);
         },
         error:(error)=>{
            console.log("error",error)
-           
+           this.emitirYaSeEdito.emit(error.error)
         }
        })  
     }

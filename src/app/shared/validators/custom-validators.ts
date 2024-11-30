@@ -1,4 +1,5 @@
-import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
+import { AbstractControl, ValidationErrors, ValidatorFn,FormGroup  } from '@angular/forms';
+import {  isValid, parseISO ,startOfDay,isBefore} from 'date-fns';
 
 export function isFechaPasada(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
@@ -7,16 +8,40 @@ export function isFechaPasada(): ValidatorFn {
       const anio = control.get('anio')?.value;
   
       if (dia && mes && anio) {
-        const fechaIngresada = new Date(anio, mes - 1, dia); // Mes empieza desde 0
-        const fechaActual = new Date();
-        fechaIngresada.setHours(0, 0, 0, 0)
-        fechaActual.setHours(0, 0, 0, 0)
-        // Compara las fechas
-        if (fechaIngresada < fechaActual) {
-          return { isFechaPasada: true }; // La fecha no es válida
+
+        const diaFormateado = String(dia).padStart(2, '0'); 
+          const mesFormateado = String(mes).padStart(2, '0');
+          const fechaIngresada = parseISO(`${anio}-${mesFormateado}-${diaFormateado}`);
+
+          const fechaActual = startOfDay(new Date());//la fecha con hr 0:0:0
+          if (isBefore(fechaIngresada, fechaActual)) {
+            return { isFechaPasada: true };
+        
         }
       }
   
       return null; // La fecha es válida
+    };
+  }
+
+
+
+
+  export function fechaValida(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      
+        const dia = control.get('dia')?.value;
+        const mes = control.get('mes')?.value;
+        const anio = control.get('anio')?.value;
+  
+        if (dia && mes  && anio ) {
+          const diaFormateado = String(dia).padStart(2, '0'); 
+          const mesFormateado = String(mes).padStart(2, '0');
+          const fechaIngresada = parseISO(`${anio}-${mesFormateado}-${diaFormateado}`);
+          if (!isValid(fechaIngresada)) {
+            return { isFechaInvalida:true };
+            }
+        }
+      return null;
     };
   }

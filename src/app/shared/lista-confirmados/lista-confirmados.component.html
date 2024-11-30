@@ -1,9 +1,15 @@
+<h1 class="modal-title fs-5">{{titulo}}({{totalRegistros}})</h1>
 @if(evento){
 
   <ul class="list-group list-group-flush">
     @for(usuario of usuariosConfirmados;track $index){
-   
-      <li class="list-group-item">{{usuario.id}} - {{usuario.nombre}}</li>
+      @if(usuario){
+        <li class="list-group-item">{{usuario.id}} - {{usuario.nombre}}</li>
+      }
+      @else{
+        <li class="list-group-item">&nbsp; </li>
+        
+      }
     }
      </ul>
    

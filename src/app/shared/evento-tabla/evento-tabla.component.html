@@ -12,24 +12,25 @@
             @for(evento of eventos; track $index){
                 <tr>
                   @if(evento==null){
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
                   }
                   @else{
                     <td>{{ evento.fecha | date: 'dd-MM-yyyy' }}</td>
                     <td>{{evento.nombre}}</td>
                     <td>
-                        <app-boton-editar [modal_data_bs_target]="'#exampleModal'" (onEditarEvento)="settearEventoSeleccionado($index)"></app-boton-editar>
+                        <app-boton-editar [modal_data_bs_target]="'#exampleModal'"   (onEditarEvento)="settearEventoSeleccionado($index)"></app-boton-editar>
                         <button title="eliminar"  (click)="OnBorrarEventoLogico($index)">
                             <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#789DE5">
                                 <path d="M0 0h24v24H0V0z" fill="none"/><path d="M8 9h8v10H8z" opacity=".3"/>
                                 <path d="M15.5 4l-1-1h-5l-1 1H5v2h14V4zM6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM8 9h8v10H8V9z"/>
                             </svg>
                         </button>
-                        <app-boton-detalle [modal_data_bs_target]="'#detalleModal'" (emitirDetalleClickeado)="escucharDetalleClickeado($index)"></app-boton-detalle>
-                        <app-boton-asistencia (emitirAsistenciaClickeada)="btnAsistenciaClickeada($index)" [disabled]="!isFechaActual(evento.fecha)"></app-boton-asistencia>
-                        
+                        <app-boton-detalle [modal_data_bs_target]="'#detalleModal'" (emitirDetalleClickeado)="settearEventoSeleccionado($index)"></app-boton-detalle>
+                        <a [routerLink]="['../asistencia']" [queryParams]="{ data: evento | stringify }" >
+                          <app-boton-asistencia  [disabled]="!isFechaActual(evento.fecha)"></app-boton-asistencia>
+                        </a>                   
                     </td>
                   }
                 </tr>
@@ -55,7 +56,7 @@
 
 
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -64,10 +65,11 @@
       </div>
       <div class="modal-body ">
         @if(!yaSeEdito){
-          <app-evento-formulario [isEditar]="true" [evento]="eventoSeleccionado" (emitirYaSeEdito)="escucharYaSeEdito()" ></app-evento-formulario>
+          <app-evento-formulario [isEditar]="true" [evento]="eventoSeleccionado" (emitirYaSeEdito)="escucharYaSeEdito($event)" ></app-evento-formulario>
         }
         @else {
-          <p>Evento editado ✔</p>
+
+          <p>{{rtaEdicion}} </p>
         }
       </div>
     </div>
@@ -76,4 +78,4 @@
 
 <!-- modal del ver detalle -->
 
-  <app-evento-detalle [idModal]="'detalleModal'" [funcionPagina]="funcionPagina2" [evento]="eventoSeleccionado"></app-evento-detalle>
+  <app-evento-detalle [idModal]="'detalleModal'"  [evento]="eventoSeleccionado"></app-evento-detalle>

@@ -8,27 +8,40 @@ export interface Evento {
   }
 
 
+  export class FechaEvento {
+    private year:number;
+    private month:number;
+    
+    private day:number;
+    private fecha:string;
+
+    // "fecha": "2024-11-30T03:00:00.000Z",
+    constructor(fecha: string) {
+      const [fecha2,hora] = fecha.split("T")
+      this.fecha=fecha2;
+      const [year, month, day] = fecha2.split("-").map(Number);
+      this.year=year;
+      this.month=month;
+      this.day=day;
+    }
+   
   
-export class FechaEvento {
-  private fecha: Date;
+    get dia(): number {
+      return this.day
+    }
   
-  constructor(fecha: string) {
-  this.fecha = new Date(fecha);
+    get mes(): number {
+      return this.month
+    }
+  
+    get anio():number {
+      return this.year
+    }
+
+    get fechaString():string{
+      return this.fecha;
+    }
   }
-  
-  get dia(): number {
-  return this.fecha.getDate();
-  }
-  
-  get mes(): number {
-  return this.fecha.getMonth() + 1;
-  }
-  
-  get anio(): number {
-  return this.fecha.getFullYear();
-  }
-  }
-  
 
   export interface ResponseGetByIdOrName {
     registros: Evento[];

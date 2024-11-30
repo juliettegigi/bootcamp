@@ -2,22 +2,19 @@ import { Component ,inject} from '@angular/core';
 import { CommonModule,DatePipe } from '@angular/common';
 import { Evento } from '../../models/evento';
 import { EventoApiService } from '../../core/services/evento-api.service';
-import { PaginationComponent } from '../pagination/pagination.component';
-import { AppConstants } from '../app-constants';
 import { ParticipacionApiService } from '../../core/services/participacion-api.service';
-import { UsuarioEventoDetalleComponent } from '../usuario-evento-detalle/usuario-evento-detalle.component';
+import { PaginationComponent } from '../../shared/pagination/pagination.component';
+import { UsuarioEventoDetalleComponent } from '../../shared/usuario-evento-detalle/usuario-evento-detalle.component';
+import { AppConstants } from '../../shared/app-constants';
 
 @Component({
-  selector: 'app-usuario-tabla',
+  selector: 'app-u-prox-eventos',
   standalone: true,
   imports: [DatePipe,PaginationComponent,CommonModule,UsuarioEventoDetalleComponent],
-  templateUrl: './usuario-tabla.component.html',
-  styleUrl: './usuario-tabla.component.css'
+  templateUrl: './u-prox-eventos.component.html',
+  styleUrl: './u-prox-eventos.component.css'
 })
-
-
-export class UsuarioTablaComponent {
-  //trustedHtml: SafeHtml;
+export class UProxEventosComponent {
   isModalVisible = false; 
   eventos:Evento[]=[];
   private eventoApi=inject(EventoApiService);
@@ -95,7 +92,6 @@ export class UsuarioTablaComponent {
 
 
   onConfirmarParticipacion(eventoId:number , event:MouseEvent){
-    console.log("me ejecuto")
     event.stopPropagation()
      const participacionId=this.registrado[eventoId];
      this.participacionApi.setConfirmadoToggle(participacionId).subscribe({
@@ -128,5 +124,4 @@ export class UsuarioTablaComponent {
   cerrarModal() {
     this.isModalVisible = false; // Ocultar modal
   }
-
 }

@@ -1,11 +1,9 @@
 import { Component,Input ,Output,EventEmitter } from '@angular/core';
-import { Observable } from 'rxjs';
-import { EventoFormularioComponent } from '../evento-formulario/evento-formulario.component';
 
 @Component({
   selector: 'app-boton-editar',
   standalone: true,
-  imports: [EventoFormularioComponent],
+  imports: [],
   templateUrl: './boton-editar.component.html',
   styleUrl: './boton-editar.component.css'
 })

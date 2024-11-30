@@ -3,19 +3,22 @@ import { CommonModule,DatePipe } from '@angular/common';
 
 import { Evento } from '../../models/evento';
 import { EventoApiService } from '../../core/services/evento-api.service';
-import { PaginationComponent } from '../pagination/pagination.component';
-import { AppConstants } from '../app-constants';
-import { UsuarioEventoDetalleComponent } from '../usuario-evento-detalle/usuario-evento-detalle.component';
+
+
 import { ParticipacionApiService } from '../../core/services/participacion-api.service';
+import { PaginationComponent } from '../../shared/pagination/pagination.component';
+import { UsuarioEventoDetalleComponent } from '../../shared/usuario-evento-detalle/usuario-evento-detalle.component';
+import { AppConstants } from '../../shared/app-constants';
 
 @Component({
-  selector: 'app-usuario-tabla-mis-eventos',
+  selector: 'app-u-mis-eventos',
   standalone: true,
   imports: [UsuarioEventoDetalleComponent,DatePipe,PaginationComponent,CommonModule],
-  templateUrl: './usuario-tabla-mis-eventos.component.html',
-  styleUrl: './usuario-tabla-mis-eventos.component.css'
+  templateUrl: './u-mis-eventos.component.html',
+  styleUrl: './u-mis-eventos.component.css'
 })
-export class UsuarioTablaMisEventosComponent {
+export class UMisEventosComponent {
+
   eventos:Evento[]=[];
   private eventoApi=inject(EventoApiService);
   private participacionApi=inject(ParticipacionApiService);
@@ -24,13 +27,13 @@ export class UsuarioTablaMisEventosComponent {
 
 
   /* para el paginado */
+  
   LIMIT=AppConstants.LIMIT_TABLA_EVENTOS;
   readonly PAGES_CANTIDADxGRUPO=3;
   funcionPagina=(limit: number, offset: number) => this.eventoApi.getEventosByUsuarioIsPresente(this.userId,limit,offset);
  
   recibirEventos({ arregloRegistrosPorPag, totalRegistros }: { arregloRegistrosPorPag: any[], totalRegistros: number }){
     this.eventos=arregloRegistrosPorPag;  
-console.log("ME EJECUTO")
       while(this.eventos.length%this.LIMIT!==0){
       this.eventos.push(null as any)
     }  
@@ -55,5 +58,4 @@ console.log("ME EJECUTO")
     }
     });
   }
-  
 }

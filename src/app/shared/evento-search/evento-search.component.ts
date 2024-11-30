@@ -1,4 +1,4 @@
-import { Component,inject, Input,Output,EventEmitter } from '@angular/core';
+import { Component,Input,Output,EventEmitter } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
@@ -16,9 +16,7 @@ export class EventoSearchComponent {
 
    get termino(){
       return this.formulario.get('termino')?.value;
-   }
-
-   
+   } 
  
  
    onSearch(){

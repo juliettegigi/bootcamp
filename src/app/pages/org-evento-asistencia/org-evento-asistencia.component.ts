@@ -1,32 +1,46 @@
-import { Component,Input,inject } from '@angular/core';
+import { Component,inject } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';
+
+import { PaginationComponent } from '../../shared/pagination/pagination.component';
+import { EventoSearchComponent } from '../../shared/evento-search/evento-search.component';
 import { Evento } from '../../models/evento';
-import { PaginationComponent } from '../pagination/pagination.component';
-import { Usuario, UsuarioMasPresenteYconfirmado } from '../../models/usuario';
 import { UsuarioApiService } from '../../core/services/usuario-api.service';
-import { AppConstants } from '../app-constants';
 import { ParticipacionApiService } from '../../core/services/participacion-api.service';
-import { EventoSearchComponent } from '../evento-search/evento-search.component';
+import { AppConstants } from '../../shared/app-constants';
+import { UsuarioMasPresenteYconfirmado } from '../../models/usuario';
 
 @Component({
-  selector: 'app-evento-asistencia',
+  selector: 'app-org-evento-asistencia',
   standalone: true,
   imports: [PaginationComponent,CommonModule,EventoSearchComponent],
-  templateUrl: './evento-asistencia.component.html',
-  styleUrl: './evento-asistencia.component.css'
+  templateUrl: './org-evento-asistencia.component.html',
+  styleUrl: './org-evento-asistencia.component.css'
 })
-export class EventoAsistenciaComponent {
-  @Input() evento?:Evento;
+export class OrgEventoAsistenciaComponent {
+  evento?:Evento;
   PAGES_CANTIDADxGRUPO=3;
   LIMIT=AppConstants.LIMIT_LISTA_USUARIOS;
   usuariosDelEvento?:UsuarioMasPresenteYconfirmado[];
   private usuarioApi=inject(UsuarioApiService);
   private participacionApi=inject(ParticipacionApiService);
+  funcionPagina!: (limit: number, offset: number) => Observable<any>;
+
+  constructor(private route: ActivatedRoute) {}
+
+  ngOnInit(): void {
+    this.route.queryParams.subscribe((params) => {
+      if (params['data']) {
+        this.evento = JSON.parse(params['data']);
+        this.funcionPagina =(limit:number,offset:number)=> this.usuarioApi.getUsuariosPorEvento(this.evento!.id,limit,offset);
+      }
+    });
+  }
   
 
 
-  funcionPagina =(limit:number,offset:number)=> this.usuarioApi.getUsuariosPorEvento(this.evento!.id,limit,offset);
+ 
  
   recibirUsuarios({arregloRegistrosPorPag,totalRegistros,}: {arregloRegistrosPorPag: any[];totalRegistros: number;}){
     this.usuariosDelEvento=arregloRegistrosPorPag;
@@ -53,5 +67,4 @@ reciboInputValue(inputValue:string){
   }
   else this.funcionPagina =(limit:number,offset:number)=> this.usuarioApi.getUsuariosPorEvento2(inputValue,this.evento!.id,limit,offset);
 }
-  
 }

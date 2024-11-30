@@ -8,19 +8,26 @@
  
 <div class="d-flex" style="padding-top: 56px;">
     <!-- Barra de navegación vertical fija a la izquierda -->
-    <app-usuario-nav-bar (emitirSeleccionado)="recibirSeleccionado($event)"/>
+    <div class="d-flex" style="padding-top: 56px;">
+        <!-- Barra de navegación vertical fija a la izquierda -->
+        <nav class="nav flex-column bg-light position-fixed vh-100 p-3" style="width: 200px;">
+          <ul class="navbar-nav">
+            <li class="nav-item " >
+              <a class="nav-link" routerLink="proxEventos" routerLinkActive="active">Próximos eventos</a>
+            </li>
+            <li class="nav-item"  >
+              <a class="nav-link" routerLink="misEventos" routerLinkActive="active">Mis eventos</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/inicio">Ingresar como organizador</a>
+            </li>
+          </ul>
+        </nav>   
+    </div>
   
     <!-- Contenido principal  -->
     <div class="content" style="margin-left: 200px; padding: 20px; overflow-y: auto; height: calc(100vh - 56px);">
-        @switch (seleccion) {
-            @case ("lista") {
-               <app-usuario-tabla></app-usuario-tabla>
-            }
-            @case("misEventos"){
-             <app-usuario-tabla-mis-eventos/>            
-            }
-        }
-        
+        <router-outlet />
       
     </div>
   </div>

@@ -1,4 +1,4 @@
-<!-- Barra de navegación superior fija en la parte superior de la pantalla -->
+
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
     <div class="container-fluid">
       <a class="navbar-brand ms-auto" (click)="logOut()">Cerrar sesión</a>
@@ -6,25 +6,24 @@
 </nav>
   
  
-<div class="d-flex" style="padding-top: 56px;">
-    <!-- Barra de navegación vertical fija a la izquierda -->
-    <app-nav-bar (emitirSeleccionado)="recibirSeleccionado($event)"></app-nav-bar>
-  
-    <!-- Contenido principal  -->
-    <div class="content" style="margin-left: 200px; padding: 20px; overflow-y: auto; height: calc(100vh - 56px);">
-        @switch (seleccion) {
-            @case ("lista") {
-                <app-evento-search (emitirInput)="recibirInput($event)" [placeholder]="'Buscar(id, nombre)'"></app-evento-search>
-                <app-evento-tabla (emitirAsistenciaPorEvento)="recibirEventoAsistencia($event)" [idOrName]="idOrName"/> 
-            }
-            @case("asistencia"){
-               <app-evento-asistencia [evento]="evento"/>               
-            }
-            @case("crearEvento"){
-               <app-evento-formulario/>               
-            }
-        }
-        
-      
+  <div class="d-flex" style="padding-top: 56px;">
+    <div class="d-flex" style="padding-top: 56px;">
+      <nav class="nav flex-column bg-light position-fixed vh-100 p-3" style="width: 200px;">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="listaEventos" routerLinkActive="active">Lista de eventos</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="agregarEvento" routerLinkActive="active">Agregar evento</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/usuarios">Ingresar como usuario</a>
+        </li>
+      </nav>
+    </div>
+
+    <div class="content col-12 col-md-6 col-lg-4" style="margin-left: 200px; padding: 20px; overflow-y: auto; height: calc(100vh - 56px);" >
+        <router-outlet />
     </div>
   </div>
+
+  <!--  <app-evento-asistencia [evento]="evento"/>   -->

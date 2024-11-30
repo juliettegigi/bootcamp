@@ -1,29 +1,45 @@
 import {inject, Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { NavBarComponent } from '../../shared/nav-bar/nav-bar.component';
-import { EventoSearchComponent } from '../../shared/evento-search/evento-search.component';
-import { EventoTablaComponent } from '../../shared/evento-tabla/evento-tabla.component';
-import { EventoAsistenciaComponent } from '../../shared/evento-asistencia/evento-asistencia.component';
+import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { Evento } from '../../models/evento';
 import { Usuario } from '../../models/usuario';
-import { EventoFormularioComponent } from '../../shared/evento-formulario/evento-formulario.component';
 import { UsuarioApiService } from '../../core/services/usuario-api.service';
 
 @Component({
   selector: 'app-inicio',
   standalone: true,
-  imports: [NavBarComponent,EventoSearchComponent,EventoTablaComponent,EventoAsistenciaComponent,EventoFormularioComponent],
+  imports: [RouterOutlet,RouterLink,RouterLinkActive],
   templateUrl: './inicio.component.html',
   styleUrl: './inicio.component.css'
 })
 export class InicioComponent {
+
+
+    
+  tieneRolUsuario = false;
+
+  constructor(private router: Router) {
+    // Verifica si estamos en el entorno del navegador
+    if (typeof window !== 'undefined' && typeof window.localStorage !== 'undefined') {
+      // Accede a localStorage solo si está disponible en el navegador
+      const userRoles = localStorage.getItem('userRoles');
+      if (userRoles) {
+        try {
+          // Asegúrate de que 'userRoles' sea un string JSON válido
+          const roles = JSON.parse(userRoles);
+          this.tieneRolUsuario = roles.some((role: { rol: string; }) => role.rol === 'USUARIO');
+        } catch (error) {
+          console.error('Error al parsear los roles del usuario:', error);
+        }
+      }
+    }
+  }
 
   seleccion="";
   usuariosPorEvento?:Usuario[];
   idOrName=""
   evento?:Evento;
   
-  constructor(private router: Router) {}
+  
   private usuarioApi=inject(UsuarioApiService);
 
 

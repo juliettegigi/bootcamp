@@ -19,7 +19,4 @@ p {
     font-weight: bold; /* Texto en negrita */
   }
   
-  /* Opcional: estilo de hover */
-  p:hover {
-    background-color: #e9ecef; /* Cambia el fondo cuando el mouse pasa sobre él */
-  }
+  
