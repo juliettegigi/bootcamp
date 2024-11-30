@@ -15,9 +15,10 @@
         <li class="nav-item">
           <a class="nav-link" routerLink="agregarEvento" routerLinkActive="active">Agregar evento</a>
         </li>
-        <li class="nav-item">
+        @if(tieneRolUsuario)
+       { <li class="nav-item">
           <a class="nav-link" routerLink="/usuarios">Ingresar como usuario</a>
-        </li>
+        </li>}
       </nav>
     </div>
 
@@ -25,5 +26,3 @@
         <router-outlet />
     </div>
   </div>
-
-  <!--  <app-evento-asistencia [evento]="evento"/>   -->
