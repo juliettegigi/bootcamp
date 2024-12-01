@@ -48,6 +48,7 @@ export class UProxEventosComponent {
       this.participacionApi.eliminarParticipacion( participacionId ).subscribe({
         next:(rta)=>{
           this.registrado[(eventoId)]=0; 
+          this.confirmado[(eventoId)]=0; 
         },
         error:(error)=>{
           console.log("error",error)
